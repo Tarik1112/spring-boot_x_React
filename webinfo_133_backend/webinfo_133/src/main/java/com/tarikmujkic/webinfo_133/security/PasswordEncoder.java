@@ -11,4 +11,8 @@ public class PasswordEncoder {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    public boolean pwMatching(String rawPassword, String encodedPassword){
+        return rawPassword == encodedPassword;
+    }
 }
