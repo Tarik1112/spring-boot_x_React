@@ -1,13 +1,25 @@
 import { useState } from "react";
+import Login from "../components/user/Login";
+import Register from "../components/user/Register";
+import Dashboard from "../components/Dashboard"
+import { BrowserRouter,Redirect ,Route, Routes } from "react-router-dom";
 
 const Main = () =>{
     return(
         <div>
-            <p>I'm main component</p>
-        </div>
-        // <Login/>
-        // <Register />
-    );
-}
+    <BrowserRouter>
+    <Routes>
+        <Route exact path="/register" element={<Register />} /> 
+         
+       
+        <Route exact path="/login" element={<Login /> } /> 
 
-export default Main
+        
+        <Route exact path="/" element={<Dashboard />} />
+        </Routes>
+    </BrowserRouter>
+    </div>
+    );
+};
+
+export default Main;

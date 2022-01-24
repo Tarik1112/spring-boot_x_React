@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
             throw new IllegalStateException("Username already taken!");
         }
 
-        if(user.getPassword() != user.getConfirmPassword()){
+        if(!(user.getPassword().equals(user.getConfirmPassword()))){
             throw new IllegalStateException("Passwords don't match. Please try again");
         }
         user.setRole(1);
