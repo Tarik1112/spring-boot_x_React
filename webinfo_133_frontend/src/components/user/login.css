@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.mainContent{
+    min-height: 100vh;
+    position: relative;
+    
+}
+
+.mainContainer{
+    position: absolute;
+    background-color: rgb(88, 158, 219);
+    height: 100%;
+    width: 100%;
+}
+
+form {
+    background-color: white;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    text-align: left;
+    width: 25%;
+}
+
+/* .label */
