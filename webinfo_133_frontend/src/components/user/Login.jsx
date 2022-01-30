@@ -10,21 +10,28 @@ const Login = () =>{
     const [passwordReg, setPasswordReg] = useState("");
 
 
-    const login =  () =>{
-        LoginAPI(  {
+    const handleSubmit =  async(event) =>{
+        
+        event.preventDefault();
+        const userLogin = await LoginAPI({
             "password": passwordReg,
             "username": usernameReg
         });
-        console.log(JSON.stringify({
-        "password": passwordReg,
-        "username": usernameReg},null,2))
-        navigate('/dashboard');
+            console.log('userlogin', userLogin);
+            if(userLogin?.status === 200){
+                console.log("Radi");
+                navigate("/dashboard");
+            }else{
+                console.log("ne dira")
+            }
+            
+        
     };
 
     return(
-       <div className="mainContent" onSubmit={login}>
+       <div className="mainContent">
         <div className="mainContainer d-flex justify-content-center align-items-center w-100">
-        <form className="rounded p-4 p-sm-3">
+        <form className="rounded p-4 p-sm-3" onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
                 <Form.Label className="label">Username</Form.Label>
                 <Form.Control type="username" placeholder="Enter Username" onChange={(e) => setUsernameReg(e.target.value)}/>                

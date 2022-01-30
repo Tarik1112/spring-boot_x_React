@@ -1,30 +1,32 @@
-export const RegisterAPI = async (data) => {
-    await fetch("http://localhost:8081/webinfo/api/user/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data, null, 2),
-    }).then(response => {
-        if(response.status === 200){
-            alert("Korisnički račun uspješno kreiran");
+import  axios  from "axios";
 
-        }else{
-            alert("Doslo je do greske!");
-        }
-        return response.json()
-    }).then((data)=>console.log(data));
+export const RegisterAPI = async (data) => {
+    try{
+        let registerUser = await axios.post("http://localhost:8081/webinfo/api/user/register", data);
+        console.log("servis", registerUser);
+        return registerUser;
+    }catch(err){
+        console.log(err);
+    }
 };
 
 export const LoginAPI = async (data) => {
-    await fetch("http://localhost:8081/webinfo/api/user/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data, null, 2),
-    }).then(response => {
-        if(response.status === 200){
-            alert("Uspjesna prijava");
-        }else{
-            alert("Doslo je do greske!")
-        }
-        return response.json()
-    }).then((data)=>console.log(data));
+    try{
+        let loginUser = await axios.post("http://localhost:8081/webinfo/api/user/login", data);
+        console.log("servis", loginUser);
+        return loginUser;
+    }catch(err){
+        console.log(err)
+    }
+    
 };
+
+export const updateUserAPI = async (data , id) => {
+    try{
+        let updateUser = await axios.put(`http://localhost:8081/webinfo/api/user/update_user/${id}`, data);
+        console.log("update", updateUser);
+        return updateUser;
+    }catch(err){
+        console.log(err);
+    }
+}

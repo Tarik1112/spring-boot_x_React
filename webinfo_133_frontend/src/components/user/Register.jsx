@@ -10,17 +10,20 @@ const Register = () =>{
     const [passwordReg, setPasswordReg] = useState("");
     const [confirmPasswordReg, setConfirmPasswordReg] = useState("");
 
-    const register =  () =>{
-        RegisterAPI(  {
+    const handleSubmit =  async(event) =>{
+        event.preventDefault();
+        const userRegister = await RegisterAPI(  {
             "confirm_password": confirmPasswordReg,
             "email": emailReg,
             "password": passwordReg,
             "username": usernameReg
-        }, navigate);
-        console.log(JSON.stringify({"confirm_password": confirmPasswordReg,
-        "email": emailReg,
-        "password": passwordReg,
-        "username": usernameReg},null,2))
+        });
+        console.log('userReg', userRegister);
+        if(userRegister?.status === 200){
+            navigate("/login");
+        }else{
+            alert("Doslo je do greske. Lozinke nisu identicne!");
+        }
        
     };
 
@@ -28,7 +31,7 @@ const Register = () =>{
     return(
         <div className="mainContent ">
         <div className="mainContainer d-flex justify-content-center align-items-center w-100">
-        <form className="rounded p-4 p-sm-3" onSubmit={register}>
+        <form className="rounded p-4 p-sm-3" onSubmit={handleSubmit}>
 
             <Form.Group className="mb-3">
                 <Form.Label className="label">Username</Form.Label>
@@ -50,7 +53,7 @@ const Register = () =>{
                 <Form.Control type="password" placeholder="Confirm Password" onChange={(e) => setConfirmPasswordReg(e.target.value)}/>
             </Form.Group>
 
-            <button className="btn btn-primary" type="submit" disabled={!usernameReg || !emailReg || !confirmPasswordReg || !passwordReg} >Login</button>
+            <button className="btn btn-primary" type="submit" disabled={!usernameReg || !emailReg || !confirmPasswordReg || !passwordReg} >Register</button>
 
             <p className="mt-3">You have an account? <a href="/login">Sign in</a></p>
             <p className="mt-3">Enter as <a href="/dashboard">Guest</a></p>

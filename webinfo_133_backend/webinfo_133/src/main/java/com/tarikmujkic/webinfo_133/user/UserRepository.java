@@ -3,12 +3,11 @@ package com.tarikmujkic.webinfo_133.user;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,6 +17,10 @@ public interface UserRepository
 
     Optional<UserEntity> findByUsername(String username);
 
-//    @Query("FROM UserEntity u WHERE u.username LIKE :username AND u.password LIKE :password")
     Optional<UserEntity> findByUsernameAndPassword(String username, String password);
+
+    @Query("FROM UserEntity u WHERE u.Id NOT LIKE '1112' ")
+    List<UserEntity> findAll();
+
+
 }

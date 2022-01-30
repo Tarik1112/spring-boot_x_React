@@ -1,9 +1,9 @@
-
+import Navbar from '../components/NavBar'
 
 const Dashboard = () =>{
     return (
         <div>
-            <p>Dashboard screen!</p>
+            <Navbar />
         </div>
     );
 }

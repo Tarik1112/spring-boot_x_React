@@ -2,12 +2,16 @@ package com.tarikmujkic.webinfo_133.user;
 
 import com.tarikmujkic.webinfo_133.security.PasswordEncoder;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -45,14 +49,30 @@ public class UserService implements UserDetailsService {
 
     public String signIn(UserEntity user){
 
-        boolean isRegistered = userRepository.findByUsernameAndPassword(user.getUsername(),user.getPassword()).isPresent();
-        if(isRegistered){
-            return "Signed in successfully";
 
-        }else{
+        if(userRepository.findByUsername(user.getUsername()).isPresent()){
+            if(userRepository.findByUsernameAndPassword(user.getUsername(),user.getPassword()).isPresent()) {
+                if (userRepository.findByUsername(user.getUsername()).get().getStatus() == 1)
+                    return "Signed in successfully";
+                throw new IllegalStateException("User is not active");
+            }
             throw new IllegalStateException("Username or password are incorrect!");
+        }else{
+            throw new IllegalStateException("User not found!");
         }
-
-
     }
-}
+
+        public String updateUser(UserEntity user, String id){
+            UserEntity userToUpdate = userRepository.findByUsername(user.getId()).get();
+            if(userToUpdate.equals(id)) {
+                user.setUsername(userToUpdate.getUsername());
+                user.setPassword(userToUpdate.getPassword());
+                user.setStatus(userToUpdate.getStatus());
+                userRepository.save(user);
+                return "User updated successfully";
+            }
+            throw new IllegalStateException("There is no user to update");
+        }
+    }
+
+
